@@ -1,0 +1,33 @@
+﻿@page "/shots"
+
+<h3 class="mb-4">Scenes + Shots</h3>
+
+@if (shots == null)
+{
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+}
+else if (shots.Count == 0)
+{
+    <div class="alert alert-warning" role="alert">
+        No locations found.
+    </div>
+}
+else
+{
+    <ul class="list-group">
+        @foreach (var shot in shots)
+        {
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="fw-bold">@shot.Title</div>
+                        <small class="text-muted">Shooting Time: @shot.ShootingTime</small>
+                    </div>
+                    <span class="badge bg-primary rounded-pill">@shot.Id</span>
+                </div>
+            </li>
+        }
+    </ul>
+}
