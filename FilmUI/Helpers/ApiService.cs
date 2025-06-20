@@ -7,11 +7,11 @@ public interface IApiService
     Task<List<T>> GetListAsync<T>(string relativeUrl);
 }
 
-public class ApiService(HttpClient http) : IApiService
+public class ApiService(HttpClient http, AppConfig config) : IApiService
 {
     private readonly HttpClient _http = http;
-    private const string BackendUrl = "http://localhost:7082";
-    private const string FilmId = "C82FCBFB-2F23-40B2-A6AF-AEA8A608504D";
+    private readonly string BackendUrl = config.BackendUrl;
+    private readonly string FilmId = config.FilmId;
 
     public async Task<List<T>> GetListAsync<T>(string relativeUrl)
     {

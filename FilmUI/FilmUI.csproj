@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -11,4 +11,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.14" PrivateAssets="all" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="wwwroot\appconfig.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="wwwroot\appconfig.production.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>
