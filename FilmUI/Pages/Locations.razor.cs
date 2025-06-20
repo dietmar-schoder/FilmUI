@@ -6,13 +6,13 @@ namespace FilmUI.Pages;
 
 public partial class Locations : ComponentBase
 {
-    private List<LocationDto>? locations;
+    private List<LocationDto> locations;
 
     [Inject]
-    public HttpClient Http { get; set; } = null!;
+    public IApiService Api { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        locations = await Http.GetListOrEmptyAsync<LocationDto>("/api/films/{filmId}/locations");
+        locations = await Api.GetListAsync<LocationDto>("/api/films/{filmId}/locations");
     }
 }

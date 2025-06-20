@@ -6,13 +6,13 @@ namespace FilmUI.Pages;
 
 public partial class Casts : ComponentBase
 {
-    private List<CastDto>? casts;
+    private List<CastDto> casts;
 
     [Inject]
-    public HttpClient Http { get; set; } = null!;
+    public IApiService Api { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        casts = await Http.GetListOrEmptyAsync<CastDto>("/api/films/{filmId}/casts");
+        casts = await Api.GetListAsync<CastDto>("/api/films/{filmId}/casts");
     }
 }

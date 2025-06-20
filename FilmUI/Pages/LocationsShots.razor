@@ -1,0 +1,59 @@
+﻿@page "/locations-shots"
+
+<h3 class="mb-4">Locations + Shots</h3>
+
+@if (locationsShots == null)
+{
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+}
+else if (locationsShots.Count == 0)
+{
+    <div class="alert alert-warning" role="alert">
+        No locations found.
+    </div>
+}
+else
+{
+    <div class="accordion" id="locationsAccordion">
+        @foreach (var loc in locationsShots)
+        {
+            var collapseId = $"collapse-{loc.Id}";
+            var headingId = $"heading-{loc.Id}";
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="@headingId">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@collapseId" aria-expanded="false" aria-controls="@collapseId">
+                        <div class="d-flex flex-column">
+                            <div>
+                                <span class="fw-bold">@loc.ShortDescription</span>
+                            </div>
+                            <small class="text-muted">Shots: @loc.NumberOfShots Shooting Time: @loc.ShootingTime</small>
+                        </div>
+                    </button>
+                </h2>
+                <div id="@collapseId" class="accordion-collapse collapse" aria-labelledby="@headingId" data-bs-parent="#locationsAccordion">
+                    <div class="accordion-body">
+                        @if (loc.Shots != null && loc.Shots.Count > 0)
+                        {
+                            <ul class="list-group">
+                                @foreach (var shot in loc.Shots)
+                                {
+                                    <li class="list-group-item">
+                                        <strong>@shot.Title</strong>
+                                        <br />
+                                        <small>Shooting Time: @shot.ShootingTime</small>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <div class="text-muted">No shots available at this location.</div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

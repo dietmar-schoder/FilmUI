@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Components;
 
 namespace FilmUI.Pages;
 
-public partial class ShootingDays : ComponentBase
+public partial class ShootingDaysShots : ComponentBase
 {
-    private List<ShootingDayDto> shootingDays;
+    private List<ShootingDayShotsDto> shootingDays;
 
     [Inject]
     public IApiService Api { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        shootingDays = await Api.GetListAsync<ShootingDayDto>("/api/films/{filmId}/shootingdays");
+        shootingDays = await Api.GetListAsync<ShootingDayShotsDto>("/api/films/{filmId}/shootingdays");
     }
 }

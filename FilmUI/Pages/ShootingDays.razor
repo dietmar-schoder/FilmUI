@@ -11,7 +11,7 @@
 else if (shootingDays.Count == 0)
 {
     <div class="alert alert-warning" role="alert">
-        No locations found.
+        No shooting days found.
     </div>
 }
 else
@@ -25,7 +25,6 @@ else
                         <div class="fw-bold">@shot.Number @shot.ShortDescription</div>
                         <small class="text-muted">Shooting Time: @shot.ShootingTime</small>
                     </div>
-                    <span class="badge bg-primary rounded-pill">@shot.Id</span>
                 </div>
             </li>
         }

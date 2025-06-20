@@ -1,6 +1,6 @@
 ﻿@page "/cast"
 
-<h3 class="mb-4">Scenes + Shots</h3>
+<h3 class="mb-4">Cast</h3>
 
 @if (casts == null)
 {
@@ -25,7 +25,6 @@ else
                         <div class="fw-bold">@cast.Role</div>
                         <small class="text-muted">Actor: @cast.Actor</small>
                     </div>
-                    <span class="badge bg-primary rounded-pill">@cast.Id</span>
                 </div>
             </li>
         }
