@@ -13,6 +13,6 @@ public partial class Casts : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        casts = await Api.GetListAsync<CastDto>("/api/films/{filmId}/casts");
+        casts = await Api.GetListAsync<CastDto>("/api/films/[FILMID]/casts");
     }
 }

@@ -13,6 +13,6 @@ public partial class ShootingDays : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        shootingDays = await Api.GetListAsync<ShootingDayDto>("/api/films/{filmId}/shootingdays");
+        shootingDays = await Api.GetListAsync<ShootingDayDto>("/api/films/[FILMID]/shootingdays");
     }
 }
