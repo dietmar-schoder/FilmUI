@@ -6,7 +6,9 @@ public interface IApiService
 {
     Task<T> GetAsync<T>(string relativeUrl);
     Task<List<T>> GetListAsync<T>(string relativeUrl);
+    Task PostAsync<T>(string relativeUrl, T body);
     Task PutAsync<T>(string relativeUrl, T body);
+    Task DeleteAsync(string relativeUrl);
 }
 
 public class ApiService(HttpClient httpClient, AppConfig config) : IApiService
@@ -14,6 +16,21 @@ public class ApiService(HttpClient httpClient, AppConfig config) : IApiService
     private readonly HttpClient _httpClient = httpClient;
     private readonly string BackendUrl = config.BackendUrl;
     private readonly string FilmId = config.FilmId;
+
+    public async Task PostAsync<T>(string relativeUrl, T body)
+    {
+        var url = GetUrl(relativeUrl);
+
+        try
+        {
+            var response = await _httpClient.PostAsJsonAsync(url, body);
+            response.EnsureSuccessStatusCode();
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine(Error(url, ex.Message));
+        }
+    }
 
     public async Task<T> GetAsync<T>(string relativeUrl)
     {
@@ -49,8 +66,31 @@ public class ApiService(HttpClient httpClient, AppConfig config) : IApiService
 
     public async Task PutAsync<T>(string relativeUrl, T body)
     {
-        var response = await _httpClient.PutAsJsonAsync(GetUrl(relativeUrl), body);
-        response.EnsureSuccessStatusCode();
+        var url = GetUrl(relativeUrl);
+
+        try
+        {
+            var response = await _httpClient.PutAsJsonAsync(GetUrl(relativeUrl), body);
+            response.EnsureSuccessStatusCode();
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine(Error(url, ex.Message));
+        }
+    }
+
+    public async Task DeleteAsync(string relativeUrl)
+    {
+        var url = GetUrl(relativeUrl);
+
+        try
+        {
+            var response = await _httpClient.DeleteAsync(url);
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine(Error(url, ex.Message));
+        }
     }
 
     private string GetUrl(string relativeUrl)
