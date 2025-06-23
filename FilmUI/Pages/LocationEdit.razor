@@ -1,4 +1,4 @@
-﻿@page "/cast/edit/{Id:int}"
+﻿@page "/location/edit/{Id:int}"
 
 @using FilmUI.Components
 
@@ -15,7 +15,7 @@
     }
 </div>
 
-@if (cast is null)
+@if (location is null)
 {
     <div class="spinner-border text-primary" role="status">
         <span class="visually-hidden">Loading...</span>
@@ -24,12 +24,8 @@
 else
 {
     <div class="mb-3">
-        <label class="form-label fw-bold">Role</label>
-        <input class="form-control" @bind="cast.Role" />
-    </div>
-    <div class="mb-3">
-        <label class="form-label fw-bold">Actor</label>
-        <input class="form-control" @bind="cast.Actor" />
+        <label class="form-label fw-bold">Short Description</label>
+        <input class="form-control" @bind="location.ShortDescription" />
     </div>
     <div class="d-flex flex-column gap-2" style="width: 150px;">
         <button class="btn btn-outline-secondary" @onclick="GoBack">Cancel</button>
@@ -37,6 +33,6 @@ else
     </div>
     <DeleteModal ModalId="deleteModal"
                  Title="Confirm Deletion"
-                 Message="Are you sure you want to delete this cast member?"
+                 Message="Are you sure you want to delete this location?"
                  OnConfirm="ConfirmDelete" />
 }
