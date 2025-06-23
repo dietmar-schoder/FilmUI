@@ -1,7 +1,12 @@
-﻿@page "/scenes-shots"
-@inherits ListPageBase<SceneShotsDto>
+﻿@page "/shots"
+@inherits ListPageBase<ShotDto>
 
-<h3 class="mb-4">Scenes + Shots</h3>
+<h3 class="mb-4 d-flex justify-content-between align-items-center">
+    Scenes
+    <a href="/shootingday/edit/0" class="btn btn-primary btn-sm" title="Add new scene">
+        <i class="bi bi-plus-lg"></i> Add
+    </a>
+</h3>
 
 @if (Items == null)
 {
@@ -12,7 +17,7 @@
 else if (Items.Count == 0)
 {
     <div class="alert alert-warning" role="alert">
-        No locations found.
+        No shooting days found.
     </div>
 }
 else
@@ -23,9 +28,12 @@ else
             <li class="list-group-item">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <div class="fw-bold">@shot.ShortDescription</div>
+                        <div class="fw-bold">@shot.Title @shot.ShootingTime</div>
                         <small class="text-muted">Shooting Time: @shot.ShootingTime</small>
                     </div>
+                    <a class="btn btn-sm btn-outline-primary" href="/shootingday/edit/@shot.Id" title="Edit">
+                        <i class="bi bi-pencil"></i>
+                    </a>
                 </div>
             </li>
         }
@@ -33,5 +41,5 @@ else
 }
 
 @code {
-    protected override string ApiEndpoint => "/api/films/[FILMID]/scenes-with-shots";
+    protected override string ApiEndpoint => "/api/films/[FILMID]/shots";
 }

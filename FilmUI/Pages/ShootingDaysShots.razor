@@ -1,14 +1,15 @@
 ﻿@page "/shootingdays-shots"
+@inherits ListPageBase<ShootingDayShotsDto>
 
 <h3 class="mb-4">Shooting Days + Shots</h3>
 
-@if (shootingDays == null)
+@if (Items == null)
 {
     <div class="spinner-border text-primary" role="status">
         <span class="visually-hidden">Loading...</span>
     </div>
 }
-else if (shootingDays.Count == 0)
+else if (Items.Count == 0)
 {
     <div class="alert alert-warning" role="alert">
         No shooting days found.
@@ -17,7 +18,7 @@ else if (shootingDays.Count == 0)
 else
 {
     <div class="accordion" id="shootingDaysAccordion">
-        @foreach (var shotDay in shootingDays)
+        @foreach (var shotDay in Items)
         {
             var collapseId = $"collapse-{shotDay.Id}";
             var headingId = $"heading-{shotDay.Id}";
@@ -67,4 +68,8 @@ else
             </div>
         }
     </div>
+}
+
+@code {
+    protected override string ApiEndpoint => "/api/films/[FILMID]/shootingdays-with-shots";
 }

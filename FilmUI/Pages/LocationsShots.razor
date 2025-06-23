@@ -1,14 +1,15 @@
 ﻿@page "/locations-shots"
+@inherits ListPageBase<LocationShotsDto>
 
 <h3 class="mb-4">Locations + Shots</h3>
 
-@if (locationsShots == null)
+@if (Items == null)
 {
     <div class="spinner-border text-primary" role="status">
         <span class="visually-hidden">Loading...</span>
     </div>
 }
-else if (locationsShots.Count == 0)
+else if (Items.Count == 0)
 {
     <div class="alert alert-warning" role="alert">
         No locations found.
@@ -17,7 +18,7 @@ else if (locationsShots.Count == 0)
 else
 {
     <div class="accordion" id="locationsAccordion">
-        @foreach (var loc in locationsShots)
+        @foreach (var loc in Items)
         {
             var collapseId = $"collapse-{loc.Id}";
             var headingId = $"heading-{loc.Id}";
@@ -56,4 +57,8 @@ else
             </div>
         }
     </div>
+}
+
+@code {
+    protected override string ApiEndpoint => "/api/films/[FILMID]/locations-with-shots";
 }
