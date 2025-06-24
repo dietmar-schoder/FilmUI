@@ -1,49 +1,48 @@
 ﻿@page "/locations-shots"
-@inherits ListPageBase<LocationShotsDto>
+@inherits ListPageBase<LocationDetailsDto>
 
 <h3 class="mb-4">Locations + Shots</h3>
 
-@if (Items == null)
-{
-    <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-    </div>
-}
-else if (Items.Count == 0)
-{
-    <div class="alert alert-warning" role="alert">
-        No locations found.
-    </div>
-}
-else
-{
+<LoadingOrEmptyOrList Items="Items">
     <div class="accordion" id="locationsAccordion">
-        @foreach (var loc in Items)
+        @foreach (var location in Items)
         {
-            var collapseId = $"collapse-{loc.Id}";
-            var headingId = $"heading-{loc.Id}";
+            var collapseId = $"collapse-{location.Id}";
+            var headingId = $"heading-{location.Id}";
             <div class="accordion-item">
                 <h2 class="accordion-header" id="@headingId">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@collapseId" aria-expanded="false" aria-controls="@collapseId">
                         <div class="d-flex flex-column">
                             <div>
-                                <span class="fw-bold">@loc.ShortDescription</span>
+                                <span class="fw-bold">@location.ShortDescription</span>
+                                @if (location.HasShots)
+                                {
+                                    <br />
+                                    <small class="text-muted">@location.ShotsShootingTime | @location.Roles</small>
+                                }
                             </div>
-                            <small class="text-muted">Shots: @loc.NumberOfShots Shooting Time: @loc.ShootingTime</small>
                         </div>
                     </button>
                 </h2>
                 <div id="@collapseId" class="accordion-collapse collapse" aria-labelledby="@headingId" data-bs-parent="#locationsAccordion">
                     <div class="accordion-body">
-                        @if (loc.Shots != null && loc.Shots.Count > 0)
+                        @if (location.Shots != null && location.Shots.Count > 0)
                         {
                             <ul class="list-group">
-                                @foreach (var shot in loc.Shots)
+                                @foreach (var shot in location.Shots)
                                 {
                                     <li class="list-group-item">
-                                        <strong>@shot.Title</strong>
+                                        <strong>@shot.ShortDescription</strong>
                                         <br />
-                                        <small>Shooting Time: @shot.ShootingTime</small>
+                                        @shot.ShootingDay
+                                        <br />
+                                        <small>
+                                            Shooting Time: @shot.ShootingTime
+                                            @if (!string.IsNullOrWhiteSpace(shot.Roles))
+                                            {
+                                                <text> | @shot.Roles</text>
+                                            }
+                                        </small>
                                     </li>
                                 }
                             </ul>
@@ -57,7 +56,7 @@ else
             </div>
         }
     </div>
-}
+</LoadingOrEmptyOrList>
 
 @code {
     protected override string ApiEndpoint => "/api/films/[FILMID]/locations-with-shots";

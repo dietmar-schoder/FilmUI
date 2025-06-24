@@ -16,7 +16,8 @@ public class CastDto
     }
 }
 
-public record CastShotsDto(int Id, string Role, string Actor, string ShootingTime, List<ShotDetailsDto> Shots)
+public class CastDetailsDto : BaseDataWithShotsDto
 {
-    public int NumberOfShots => Shots.Count;
+    public string Role { get; init; }
+    public string Actor { get; init; }
 }

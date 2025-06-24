@@ -1,22 +1,9 @@
 ﻿@page "/cast-shots"
-@inherits ListPageBase<CastShotsDto>
+@inherits ListPageBase<CastDetailsDto>
 
 <h3 class="mb-4">Cast + Shots</h3>
 
-@if (Items == null)
-{
-    <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-    </div>
-}
-else if (Items.Count == 0)
-{
-    <div class="alert alert-warning" role="alert">
-        No cast found.
-    </div>
-}
-else
-{
+<LoadingOrEmptyOrList Items="Items">
     <div class="accordion" id="locationsAccordion">
         @foreach (var cast in Items)
         {
@@ -28,8 +15,12 @@ else
                         <div class="d-flex flex-column">
                             <div>
                                 <span class="fw-bold">@cast.Role</span> – @cast.Actor
+                                @if (cast.HasShots)
+                                {
+                                    <br />
+                                    <small class="text-muted">@cast.ShotsShootingTime</small>
+                                }
                             </div>
-                            <small class="text-muted">Shots: @cast.NumberOfShots Shooting Time: @cast.ShootingTime</small>
                         </div>
                     </button>
                 </h2>
@@ -41,9 +32,9 @@ else
                                 @foreach (var shot in cast.Shots)
                                 {
                                     <li class="list-group-item">
-                                        <strong>@shot.Title</strong>
+                                        <strong>@shot.ShortDescription</strong>
                                         <br />
-                                        @shot.Location
+                                        @shot.Location | @shot.ShootingDay
                                         <br />
                                         <small>Shooting Time: @shot.ShootingTime</small>
                                     </li>
@@ -59,7 +50,7 @@ else
             </div>
         }
     </div>
-}
+</LoadingOrEmptyOrList>
 
 @code {
     protected override string ApiEndpoint => "/api/films/[FILMID]/casts-with-shots";

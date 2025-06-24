@@ -1,36 +1,17 @@
 ﻿@page "/shootingdays"
 @inherits ListPageBase<ShootingDayDto>
 
-<h3 class="mb-4 d-flex justify-content-between align-items-center">
-    Shooting Days
-    <a href="/shootingday/edit/0" class="btn btn-primary btn-sm" title="Add new shooting day">
-        <i class="bi bi-plus-lg"></i> Add
-    </a>
-</h3>
+<HeaderPlus Title="Shooting Days"
+            ActionUrl="/shootingday/edit/0"
+            ActionTooltip="Add new shootingday" />
 
-@if (Items == null)
-{
-    <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-    </div>
-}
-else if (Items.Count == 0)
-{
-    <div class="alert alert-warning" role="alert">
-        No shooting days found.
-    </div>
-}
-else
-{
+<LoadingOrEmptyOrList Items="Items">
     <ul class="list-group">
         @foreach (var shootingDay in Items)
         {
             <li class="list-group-item">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <div class="fw-bold">@shootingDay.Number @shootingDay.ShortDescription</div>
-                        <small class="text-muted">Shooting Time: @shootingDay.ShootingTime</small>
-                    </div>
+                    <div class="fw-bold">@shootingDay.Number @shootingDay.ShortDescription</div>
                     <a class="btn btn-sm btn-outline-primary" href="/shootingday/edit/@shootingDay.Id" title="Edit">
                         <i class="bi bi-pencil"></i>
                     </a>
@@ -38,7 +19,7 @@ else
             </li>
         }
     </ul>
-}
+</LoadingOrEmptyOrList>
 
 @code {
     protected override string ApiEndpoint => "/api/films/[FILMID]/shootingdays";

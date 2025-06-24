@@ -6,7 +6,4 @@ public class LocationDto(int id, string shortDescription)
     public string ShortDescription { get; set; } = shortDescription;
 }
 
-public record LocationShotsDto(int Id, string ShortDescription, string ShootingTime, List<ShotDto> Shots)
-{
-    public int NumberOfShots => Shots.Count;
-}
+public class LocationDetailsDto : BaseDataWithShotsDto { }

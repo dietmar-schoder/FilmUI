@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Components;
 
 namespace FilmUI.Shared;
 
-public abstract class ListPageBase<TDto> : ComponentBase
+public abstract class ListPageBase<T> : ComponentBase
 {
-    protected List<TDto> Items;
+    protected List<T> Items;
 
     [Inject]
     public IApiService Api { get; set; }
@@ -14,6 +14,6 @@ public abstract class ListPageBase<TDto> : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        Items = await Api.GetListAsync<TDto>(ApiEndpoint);
+        Items = await Api.GetListAsync<T>(ApiEndpoint);
     }
 }
