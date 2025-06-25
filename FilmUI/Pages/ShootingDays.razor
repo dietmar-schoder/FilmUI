@@ -1,18 +1,23 @@
 ﻿@page "/shootingdays"
 @inherits ListPageBase<ShootingDayDto>
 
-<HeaderPlus Title="Shooting Days"
-            ActionUrl="/shootingday/edit/0"
+<HeaderPlus Title=@ListTitle
+            ActionUrl=@($"{EditRoute}/0")
             ActionTooltip="Add new shootingday" />
 
 <LoadingOrEmptyOrList Items="Items">
     <ul class="list-group">
-        @foreach (var shootingDay in Items)
+        @foreach (var shooting in Items)
         {
             <li class="list-group-item">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div class="fw-bold">@shootingDay.Number @shootingDay.ShortDescription</div>
-                    <a class="btn btn-sm btn-outline-primary" href="/shootingday/edit/@shootingDay.Id" title="Edit">
+                    <div class="fw-bold">
+                        @shooting.Number @shooting.ShortDescription
+                        <span class="fw-normal text-muted ms-2">
+                            @shooting.ShootingDate?.ToString("dd/MM/yyyy")
+                        </span>
+                    </div>
+                    <a class="btn btn-sm btn-outline-primary" href="@EditRoute/@shooting.Id" title="Edit">
                         <i class="bi bi-pencil"></i>
                     </a>
                 </div>
@@ -22,5 +27,5 @@
 </LoadingOrEmptyOrList>
 
 @code {
-    protected override string ApiEndpoint => "/api/films/[FILMID]/shootingdays";
+    protected override PageKey Page => PageKey.ShootingDays;
 }

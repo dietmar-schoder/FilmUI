@@ -1,8 +1,8 @@
 ﻿@page "/cast"
 @inherits ListPageBase<CastDto>
 
-<HeaderPlus Title="Cast"
-            ActionUrl="/cast/edit/0"
+<HeaderPlus Title=@ListTitle
+            ActionUrl=@($"{EditRoute}/0")
             ActionTooltip="Add new cast member" />
 
 <LoadingOrEmptyOrList Items="Items">
@@ -15,7 +15,7 @@
                         <div class="fw-bold">@cast.Role</div>
                         <small class="text-muted">Actor: @cast.Actor</small>
                     </div>
-                    <a class="btn btn-sm btn-outline-primary" href="/cast/edit/@cast.Id" title="Edit">
+                    <a class="btn btn-sm btn-outline-primary" href="@EditRoute/@cast.Id" title="Edit">
                         <i class="bi bi-pencil"></i>
                     </a>
                 </div>
@@ -25,5 +25,5 @@
 </LoadingOrEmptyOrList>
 
 @code {
-    protected override string ApiEndpoint => "/api/films/[FILMID]/casts";
+    protected override PageKey Page => PageKey.Cast;
 }

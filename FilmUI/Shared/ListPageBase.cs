@@ -1,4 +1,5 @@
-﻿using FilmUI.Helpers;
+﻿using FilmUI.Constants;
+using FilmUI.Helpers;
 using Microsoft.AspNetCore.Components;
 
 namespace FilmUI.Shared;
@@ -9,8 +10,10 @@ public abstract class ListPageBase<T> : ComponentBase
 
     [Inject]
     public IApiService Api { get; set; }
-
-    protected abstract string ApiEndpoint { get; }
+    protected abstract PageKey Page { get; }
+    protected string ApiEndpoint => PageMappings.ApiEndpoints[Page];
+    protected string EditRoute => PageMappings.EditRoutes[Page];
+    protected string ListTitle => PageMappings.ListTitles[Page];
 
     protected override async Task OnInitializedAsync()
     {

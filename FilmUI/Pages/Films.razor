@@ -1,8 +1,8 @@
 ﻿@page "/films"
 @inherits ListPageBase<FilmDto>
 
-<HeaderPlus Title="Films"
-            ActionUrl="/film/edit/00000000-0000-0000-0000-000000000000"
+<HeaderPlus Title=@ListTitle
+            ActionUrl=@($"{EditRoute}/00000000-0000-0000-0000-000000000000")
             ActionTooltip="Add new film" />
 
 <LoadingOrEmptyOrList Items="Items">
@@ -14,7 +14,7 @@
                     <div>
                         <div class="fw-bold">@film.Title</div>
                     </div>
-                    <a class="btn btn-sm btn-outline-primary" href="/film/edit/@film.Id" title="Edit">
+                    <a class="btn btn-sm btn-outline-primary" href="@EditRoute/@film.Id" title="Edit">
                         <i class="bi bi-pencil"></i>
                     </a>
                 </div>
@@ -24,5 +24,5 @@
 </LoadingOrEmptyOrList>
 
 @code {
-    protected override string ApiEndpoint => "/api/films";
+    protected override PageKey Page => PageKey.Films;
 }

@@ -1,0 +1,44 @@
+﻿@typeparam TDto where TDto : class, new()
+
+<div class="d-flex align-items-center mb-3">
+    <button class="btn btn-link p-0 me-2" @onclick="Logic.GoBack" title="Go back" style="font-size: 1.5rem;">
+        <i class="bi bi-arrow-left"></i>
+    </button>
+    <h3 class="m-0 flex-grow-1">@Logic.PageTitle</h3>
+    @if (Logic.IsEditMode)
+    {
+        <button class="btn btn-outline-danger btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#deleteModal">
+            <i class="bi bi-trash"></i> Delete
+        </button>
+    }
+</div>
+
+@if (Logic.Item is null)
+{
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+}
+else
+{
+    @ChildContent
+
+    <div class="d-flex flex-column gap-2" style="width: 150px;">
+        <button class="btn btn-outline-secondary" @onclick="Logic.GoBack">Cancel</button>
+        <button class="btn btn-primary" @onclick="Logic.SaveAsync">Save</button>
+    </div>
+
+    @if (Logic.IsEditMode)
+    {
+        <DeleteModal ModalId="deleteModal"
+                     Title="Confirm Deletion"
+                     Message="@DeleteMessage"
+                     OnConfirm="Logic.ConfirmDeleteAsync" />
+    }
+}
+
+@code {
+    [Parameter] public EditPageBaseCore<TDto> Logic { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public string DeleteMessage { get; set; }
+}

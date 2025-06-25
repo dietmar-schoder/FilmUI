@@ -1,8 +1,8 @@
 ﻿@page "/shots"
 @inherits ListPageBase<ShotDto>
 
-<HeaderPlus Title="Shots"
-            ActionUrl="/shot/edit/0"
+<HeaderPlus Title=@ListTitle
+            ActionUrl=@($"{EditRoute}/0")
             ActionTooltip="Add new shot" />
 
 <LoadingOrEmptyOrList Items="Items">
@@ -12,7 +12,7 @@
             <li class="list-group-item">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="fw-bold">@shot.ShortDescription</div>
-                    <a class="btn btn-sm btn-outline-primary" href="/shootingday/edit/@shot.Id" title="Edit">
+                    <a class="btn btn-sm btn-outline-primary" href="@EditRoute/@shot.Id" title="Edit">
                         <i class="bi bi-pencil"></i>
                     </a>
                 </div>
@@ -22,5 +22,5 @@
 </LoadingOrEmptyOrList>
 
 @code {
-    protected override string ApiEndpoint => "/api/films/[FILMID]/shots";
+    protected override PageKey Page => PageKey.Shots;
 }

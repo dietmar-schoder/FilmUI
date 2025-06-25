@@ -1,7 +1,7 @@
 ﻿@page "/scenes-shots"
 @inherits ListPageBase<SceneDetailsDto>
 
-<h3 class="mb-4">Scenes + Shots</h3>
+<h3 class="mb-4">@ListTitle</h3>
 
 <LoadingOrEmptyOrList Items="Items">
     <div class="accordion" id="locationsAccordion">
@@ -49,7 +49,7 @@
                         }
                         else
                         {
-                            <div class="text-muted">No shots available for this cast member.</div>
+                            <div class="text-muted">No shots planned for this scene.</div>
                         }
                     </div>
                 </div>
@@ -59,5 +59,5 @@
 </LoadingOrEmptyOrList>
 
 @code {
-    protected override string ApiEndpoint => "/api/films/[FILMID]/scenes-with-shots";
+    protected override PageKey Page => PageKey.ScenesShots;
 }

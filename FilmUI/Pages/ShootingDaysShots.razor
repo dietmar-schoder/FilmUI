@@ -1,7 +1,7 @@
 ﻿@page "/shootingdays-shots"
 @inherits ListPageBase<ShootingDayDetailsDto>
 
-<h3 class="mb-4">Shooting Days + Shots</h3>
+<h3 class="mb-4">@ListTitle</h3>
 
 <LoadingOrEmptyOrList Items="Items">
     <div class="accordion" id="shootingDaysAccordion">
@@ -16,6 +16,9 @@
                         <div class="d-flex flex-column">
                             <div>
                                 <span class="fw-bold">@shooting.Number - @shooting.ShortDescription</span>
+                                <span class="fw-normal text-muted ms-2">
+                                    @shooting.ShootingDate?.ToString("dd/MM/yyyy")
+                                </span>
                                 @if (shooting.HasShots)
                                 {
                                     <br />
@@ -50,7 +53,7 @@
                         }
                         else
                         {
-                            <div class="text-muted">No shots available on this shooting day.</div>
+                            <div class="text-muted">No shots planned on this shooting day.</div>
                         }
                     </div>
                 </div>
@@ -60,5 +63,5 @@
 </LoadingOrEmptyOrList>
 
 @code {
-    protected override string ApiEndpoint => "/api/films/[FILMID]/shootingdays-with-shots";
+    protected override PageKey Page => PageKey.ShootingDaysShots;
 }

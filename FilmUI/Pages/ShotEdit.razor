@@ -1,0 +1,49 @@
+﻿@page "/shot/edit/{Id:int}"
+@inherits EditPageBaseInt<ShotDto>
+
+<Edit TDto="ShotDto" DeleteMessage="Are you sure you want to delete this shot?" Logic="this">
+    <div class="mb-3">
+        <label class="form-label fw-bold">Number</label>
+        <input class="form-control" @bind="Item.Number" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">Short Description</label>
+        <input class="form-control" @bind="Item.ShortDescription" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">Scene</label>
+        <select class="form-select" @bind="Item.SceneId">
+            <option value="">-- None --</option>
+            @foreach (var scene in Scenes)
+            {
+                <option value="@scene.Id">@scene.Number @scene.ShortDescription</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">Location</label>
+        <select class="form-select" @bind="Item.LocationId">
+            <option value="">-- None --</option>
+            @foreach (var location in Locations)
+            {
+                <option value="@location.Id">@location.ShortDescription</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">Shooting Day</label>
+        <select class="form-select" @bind="Item.ShootingDayId">
+            <option value="">-- None --</option>
+            @foreach (var day in ShootingDays)
+            {
+                <option value="@day.Id">
+                    @day.Number @day.ShortDescription (@day.ShootingDate?.ToString("dd/MM/yyyy"))
+                </option>
+            }
+        </select>
+    </div>
+</Edit>
