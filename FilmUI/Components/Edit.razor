@@ -25,7 +25,21 @@ else
 
     <div class="d-flex flex-column gap-2" style="width: 150px;">
         <button class="btn btn-outline-secondary" @onclick="Logic.GoBack">Cancel</button>
-        <button class="btn btn-primary" @onclick="Logic.SaveAsync">Save</button>
+        <button class="btn btn-primary"
+                @onclick="Logic.SaveAsync"
+                disabled="@Logic.IsSaving">
+            @if (Logic.IsSaving)
+            {
+                <span>
+                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                    Saving...
+                </span>
+            }
+            else
+            {
+                <span>Save</span>
+            }
+        </button>
     </div>
 
     @if (Logic.IsEditMode)

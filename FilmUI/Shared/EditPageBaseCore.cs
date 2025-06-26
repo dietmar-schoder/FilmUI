@@ -21,6 +21,7 @@ public abstract class EditPageBaseCore<TDto> : ComponentBase where TDto : class,
     public virtual string ListRoute => PageMappings.ListRoutes[Page];
 
     public bool IsEditMode => !IsAddMode;
+    public bool IsSaving { get; private set; }
 
     public virtual string PageTitle =>
         IsAddMode ? $"Add New {Page}" : $"Edit {Page}";
@@ -39,20 +40,30 @@ public abstract class EditPageBaseCore<TDto> : ComponentBase where TDto : class,
 
     protected virtual void InitNewItem() { }
 
+    protected virtual bool OnBeforeSafeOk() => true;
+
     public async Task SaveAsync()
     {
+        if (!OnBeforeSafeOk()) return;
+
+        IsSaving = true;
+
         await (IsAddMode
             ? Api.PostAsync(ApiEndpoint, Item)
             : Api.PutAsync($"{ApiEndpoint}/{IdAsString}", Item));
 
         Nav.NavigateTo(ListRoute);
+
+        IsSaving = false;
     }
 
     public async Task ConfirmDeleteAsync()
     {
+        IsSaving = true;
         await JS.InvokeVoidAsync("hideModalById", "deleteModal");
         await Api.DeleteAsync($"{ApiEndpoint}/{IdAsString}");
         Nav.NavigateTo(ListRoute);
+        IsSaving = false;
     }
 
     public void GoBack()

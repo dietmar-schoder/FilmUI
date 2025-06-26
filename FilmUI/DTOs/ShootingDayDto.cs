@@ -1,6 +1,4 @@
-﻿using FilmUI.Pages;
-
-namespace FilmUI.DTOs;
+﻿namespace FilmUI.DTOs;
 
 public class ShootingDayDto(
     int id,
