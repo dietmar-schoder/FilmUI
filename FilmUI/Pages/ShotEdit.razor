@@ -17,7 +17,7 @@
         <label class="form-label fw-bold">Scene</label>
         <select class="form-select" @bind="Item.SceneId">
             <option value="">-- None --</option>
-            @foreach (var scene in Scenes)
+            @foreach (var scene in Item.AllScenes)
             {
                 <option value="@scene.Id">@scene.Number @scene.ShortDescription</option>
             }
@@ -25,10 +25,16 @@
     </div>
 
     <div class="mb-3">
+        <button class="btn btn-outline-primary" @onclick="OpenCastModal">
+            <i class="bi bi-people"></i> Assign Cast to Shot
+        </button>
+    </div>
+
+    <div class="mb-3">
         <label class="form-label fw-bold">Location</label>
         <select class="form-select" @bind="Item.LocationId">
             <option value="">-- None --</option>
-            @foreach (var location in Locations)
+            @foreach (var location in Item.AllLocations)
             {
                 <option value="@location.Id">@location.ShortDescription</option>
             }
@@ -39,7 +45,7 @@
         <label class="form-label fw-bold">Shooting Day</label>
         <select class="form-select" @bind="Item.ShootingDayId">
             <option value="">-- None --</option>
-            @foreach (var day in ShootingDays)
+            @foreach (var day in Item.AllShootingDays)
             {
                 <option value="@day.Id">
                     @day.Number @day.ShortDescription (@day.ShootingDate?.ToString("dd/MM/yyyy"))
@@ -54,3 +60,53 @@
     </div>
 
 </Edit>
+
+@if (IsCastModalOpen)
+{
+    <div class="modal show d-block" tabindex="-1" role="dialog" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Select Cast Members</h5>
+                    <button type="button" class="btn-close" @onclick="CloseCastModal"></button>
+                </div>
+                <div class="modal-body">
+                    @if (CastSelections is null)
+                    {
+                        <p>Loading cast...</p>
+                    }
+                    else
+                    {
+                        @foreach (var cast in CastSelections)
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" @bind="cast.IsSelected" />
+                                <label class="form-check-label">
+                                    <span class="fw-bold">@cast.Role</span> - @cast.Actor
+                                </label>
+                            </div>
+                        }
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" @onclick="CloseCastModal">Close</button>
+                    <button class="btn btn-primary"
+                            @onclick="SaveCastSelectionAsync"
+                            disabled="@IsSavingCastSelections">
+                        @if (IsSavingCastSelections)
+                        {
+                            <span>
+                                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                Saving...
+                            </span>
+                        }
+                        else
+                        {
+                            <span>Save</span>
+                        }
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

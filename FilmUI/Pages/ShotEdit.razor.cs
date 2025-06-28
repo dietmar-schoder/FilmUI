@@ -6,23 +6,43 @@ namespace FilmUI.Pages;
 
 public partial class ShotEdit : EditPageBaseInt<ShotDto>
 {
-    private List<LocationDto> Locations = [];
-    private List<SceneDto> Scenes = [];
-    private List<ShootingDayDto> ShootingDays = [];
+    private bool IsCastModalOpen = false;
+    private bool IsSavingCastSelections = false;
+    private List<CastSelectionDto> CastSelections;
 
     public override PageKey Page => PageKey.Shots;
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-
-        Locations = await Api.GetListAsync<LocationDto>(PageMappings.ApiEndpoints[PageKey.Locations]);
-        Scenes = await Api.GetListAsync<SceneDto>(PageMappings.ApiEndpoints[PageKey.Scenes]);
-        ShootingDays = await Api.GetListAsync<ShootingDayDto>(PageMappings.ApiEndpoints[PageKey.ShootingDays]);
-    }
 
     protected override void InitNewItem()
     {
         Item.ShootingTimeMinutes = 60;
+    }
+
+    private async Task OpenCastModal()
+    {
+        IsCastModalOpen = true;
+        CastSelections = await Api.GetAsync<List<CastSelectionDto>>($"{ApiEndpoint}/{IdAsString}/cast-selections");
+    }
+
+    private void CloseCastModal()
+    {
+        IsCastModalOpen = false;
+    }
+
+    private async Task SaveCastSelectionAsync()
+    {
+        if (IsSavingCastSelections) return;
+
+        IsSavingCastSelections = true;
+
+        var selectedIds = CastSelections
+            .Where(c => c.IsSelected)
+            .Select(c => c.CastId)
+            .ToList();
+
+        await Api.PostAsync($"{ApiEndpoint}/{IdAsString}/cast-selections", selectedIds);
+
+        IsSavingCastSelections = false;
+
+        CloseCastModal();
     }
 }

@@ -19,6 +19,9 @@ public class ShotDto(
     public int SceneId { get; set; }
     public int? LocationId { get; set; }
     public int? ShootingDayId { get; set; }
+    public List<LocationDto> AllLocations { get; set; } = [];
+    public List<SceneDto> AllScenes { get; set; } = [];
+    public List<ShootingDayDto> AllShootingDays { get; set; } = [];
 
     public ShotDto() : this(0, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, 0) { }
 }
