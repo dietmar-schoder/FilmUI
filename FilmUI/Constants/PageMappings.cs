@@ -14,6 +14,7 @@ public static class PageMappings
         [PageKey.LocationsShots] = "/api/films/[FILMID]/locations-with-shots",
         [PageKey.ShootingDays] = "/api/films/[FILMID]/shootingdays",
         [PageKey.ShootingDaysShots] = "/api/films/[FILMID]/shootingdays-with-shots",
+        [PageKey.Calendar] = "/api/films/[FILMID]/shootingdays",
     };
 
     public static readonly Dictionary<PageKey, string> ListRoutes = new()
@@ -24,6 +25,7 @@ public static class PageMappings
         [PageKey.Shots] = "/shots",
         [PageKey.Locations] = "/locations",
         [PageKey.ShootingDays] = "/shootingdays",
+        [PageKey.Calendar] = "/shootingdays",
     };
 
     public static readonly Dictionary<PageKey, string> EditRoutes = new()
@@ -34,6 +36,7 @@ public static class PageMappings
         [PageKey.Shots] = "/shot/edit",
         [PageKey.Locations] = "/location/edit",
         [PageKey.ShootingDays] = "/shootingday/edit",
+        [PageKey.Calendar] = "/shootingday/edit",
     };
 
     public static readonly Dictionary<PageKey, string> ListTitles = new()
@@ -48,5 +51,6 @@ public static class PageMappings
         [PageKey.LocationsShots] = "Locations + Shots",
         [PageKey.ShootingDays] = "Shooting Days",
         [PageKey.ShootingDaysShots] = "Shooting Days + Shots",
+        [PageKey.Calendar] = "Calendar",
     };
 }

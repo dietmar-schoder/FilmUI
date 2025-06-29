@@ -15,5 +15,7 @@ public enum PageKey
     LocationsShots,
 
     ShootingDays,
-    ShootingDaysShots
+    ShootingDaysShots,
+
+    Calendar
 }

@@ -1,0 +1,100 @@
+﻿@page "/calendar"
+@inherits ListPageBase<ShootingDayDto>
+
+<HeaderPlus Title=@ListTitle
+ActionUrl=@($"{EditRoute}/0")
+ActionTooltip="Add new shootingday" />
+
+<LoadingOrEmptyOrList Items="Items">
+    <ul class="list-group">
+        @foreach (var day in CalendarDays)
+        {
+            if (day.Day == 1)
+            {
+                <li class="list-group-item bg-secondary text-white">
+                    <div class="d-flex">
+                        <div>
+                            <strong>@day.ToString("MMMM yyyy")</strong>
+                        </div>
+                        <div></div>
+                    </div>
+                </li>
+            }
+
+            var shooting = ShootingByDate.TryGetValue(day, out var s) ? s : null;
+            var isWeekend = day.DayOfWeek == DayOfWeek.Saturday || day.DayOfWeek == DayOfWeek.Sunday;
+            var dateClass = day == Today ? "fw-bold text-primary" : "fw-normal text-muted";
+
+            <li class="list-group-item @(isWeekend ? "bg-secondary-subtle" : "")">
+                <div class="d-flex align-items-center">
+                    <div style="width:200px;" class="fw-bold">
+                        <span class="@dateClass">
+                            @day.ToString("ddd dd/MM/yyyy")
+                        </span>
+                    </div>
+                    <div class="flex-grow-1">
+                        @if (shooting != null)
+                        {
+                            <span class="fw-bold">@($"{shooting.Number} {shooting.ShortDescription}")</span>
+                        }
+                        else
+                        {
+                            <span class="text-muted">No shooting</span>
+                        }
+                    </div>
+                    @if (shooting != null)
+                    {
+                        <a class="btn btn-sm btn-outline-primary ms-2" href="@EditRoute/@shooting.Id" title="Edit">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                    }
+                </div>
+            </li>
+        }
+    </ul>
+</LoadingOrEmptyOrList>
+
+@code {
+    protected override PageKey Page => PageKey.Calendar;
+
+    private List<DateTime> CalendarDays = new();
+    private DateTime Today = DateTime.Now.Date;
+
+    private Dictionary<DateTime, ShootingDayDto> ShootingByDate = new();
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if (Items != null && Items.Any(i => i.ShootingDate.HasValue))
+        {
+            var dates = Items
+                .Where(i => i.ShootingDate.HasValue)
+                .Select(i => i.ShootingDate.Value.Date)
+                .OrderBy(d => d)
+                .ToList();
+
+            var firstDate = dates.First();
+            if (Today < firstDate)
+            {
+                firstDate = Today;
+            }
+            var minDate = new DateTime(firstDate.Year, firstDate.Month, 1);
+            var last = dates.Last();
+            var maxDate = new DateTime(last.Year, last.Month, 1).AddMonths(1).AddDays(-1);
+
+            CalendarDays = Enumerable.Range(0, (maxDate - minDate).Days + 1)
+                .Select(offset => minDate.AddDays(offset))
+                .ToList();
+
+            ShootingByDate = Items
+                .Where(i => i.ShootingDate.HasValue)
+                .ToDictionary(i => i.ShootingDate.Value.Date, i => i);
+        }
+        else
+        {
+            CalendarDays = new List<DateTime>();
+            ShootingByDate = new Dictionary<DateTime, ShootingDayDto>();
+        }
+    }
+}

@@ -14,7 +14,7 @@
                     <div class="fw-bold">
                         @shooting.Number @shooting.ShortDescription
                         <span class="fw-normal text-muted ms-2">
-                            @shooting.ShootingDate?.ToString("dd/MM/yyyy")
+                            @shooting.ShootingDate?.ToString("ddd dd/MM/yyyy")
                         </span>
                     </div>
                     <a class="btn btn-sm btn-outline-primary" href="@EditRoute/@shooting.Id" title="Edit">
