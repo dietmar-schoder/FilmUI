@@ -24,9 +24,11 @@
         </select>
     </div>
 
-    <div class="mb-3">
-        <button class="btn btn-outline-primary" @onclick="OpenCastModal">
-            <i class="bi bi-people"></i> Assign Cast to Shot
+    <div class="mb-3" style="width: 150px;">
+        <button class="btn btn-outline-primary"
+                @onclick="OpenCastModal"
+                disabled="@(IsEditMode ? null : true)">
+            <i class="bi bi-people"></i> Assign Cast
         </button>
     </div>
 

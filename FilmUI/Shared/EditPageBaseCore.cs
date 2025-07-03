@@ -30,7 +30,7 @@ public abstract class EditPageBaseCore<TDto> : ComponentBase where TDto : class,
     {
         if (IsAddMode)
         {
-            InitNewItem();
+            await InitNewItemAsync();
         }
         else
         {
@@ -38,7 +38,10 @@ public abstract class EditPageBaseCore<TDto> : ComponentBase where TDto : class,
         }
     }
 
-    protected virtual void InitNewItem() { }
+    protected virtual async Task InitNewItemAsync()
+    {
+        await Task.CompletedTask;
+    }
 
     protected virtual bool OnBeforeSafeOk() => true;
 

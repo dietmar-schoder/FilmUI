@@ -16,7 +16,7 @@ public class ShotDto(
     public string ShootingDay { get; set; } = shootingDay;
     public string ShootingTime { get; set; } = shootingTime;
     public int ShootingTimeMinutes { get; set; } = shootingTimeMinutes;
-    public int SceneId { get; set; }
+    public int? SceneId { get; set; }
     public int? LocationId { get; set; }
     public int? ShootingDayId { get; set; }
     public List<LocationDto> AllLocations { get; set; } = [];

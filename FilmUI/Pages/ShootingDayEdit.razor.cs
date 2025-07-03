@@ -8,8 +8,9 @@ public partial class ShootingDayEdit : EditPageBaseInt<ShootingDayDto>
 {
     public override PageKey Page => PageKey.ShootingDays;
 
-    protected override void InitNewItem()
+    protected override async Task InitNewItemAsync()
     {
         Item.ShootingDate = DateTime.Today;
+        await Task.CompletedTask;
     }
 }

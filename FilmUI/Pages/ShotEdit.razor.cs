@@ -12,10 +12,8 @@ public partial class ShotEdit : EditPageBaseInt<ShotDto>
 
     public override PageKey Page => PageKey.Shots;
 
-    protected override void InitNewItem()
-    {
-        Item.ShootingTimeMinutes = 60;
-    }
+    protected override async Task InitNewItemAsync() =>
+        Item = await Api.GetAsync<ShotDto>($"{ApiEndpoint}/0");
 
     private async Task OpenCastModal()
     {
