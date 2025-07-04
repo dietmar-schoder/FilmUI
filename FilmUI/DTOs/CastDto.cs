@@ -9,7 +9,7 @@ public class CastDto(int id, string role, string actor)
     public CastDto() : this(0, string.Empty, string.Empty) { }
 }
 
-public class CastDetailsDto : BaseDataWithShotsDto
+public class CastDetailsDto : BaseDtoWithShotsDto
 {
     public string Role { get; init; }
     public string Actor { get; init; }

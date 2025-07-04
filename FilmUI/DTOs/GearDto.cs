@@ -9,7 +9,7 @@ public class GearDto(int id, string shortDescription, string notes)
     public GearDto() : this(0, string.Empty, string.Empty) { }
 }
 
-public class GearDetailsDto : BaseDataWithShotsDto
+public class GearDetailsDto : BaseDtoWithShotsDto
 {
     public string Notes { get; init; }
 }

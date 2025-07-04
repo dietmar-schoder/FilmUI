@@ -32,6 +32,7 @@ public record ShotDetailsDto(
     string Location,
     string ShootingDay,
     string ShootingTime,
+    int ShootingTimeMinutes,
     List<CastDto> Casts)
 {
     public string Roles => Casts?.Count > 0

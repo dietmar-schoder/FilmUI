@@ -7,4 +7,4 @@ public class LocationDto(int id, string shortDescription)
     public LocationDto() : this(0, string.Empty) { }
 }
 
-public class LocationDetailsDto : BaseDataWithShotsDto { }
+public class LocationDetailsDto : BaseDtoWithShotsDto { }

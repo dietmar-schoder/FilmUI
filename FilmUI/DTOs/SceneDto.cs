@@ -9,7 +9,7 @@ public class SceneDto(int id, string number, string shortDescription)
     public SceneDto() : this(0, string.Empty, string.Empty) { }
 }
 
-public class SceneDetailsDto : BaseDataWithShotsDto
+public class SceneDetailsDto : BaseDtoWithShotsDto
 {
     public string Number { get; set; }
 }

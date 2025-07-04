@@ -16,7 +16,7 @@ public class ShootingDayDto(
     public ShootingDayDto() : this(0, string.Empty, string.Empty, null, string.Empty) { }
 }
 
-public class ShootingDayDetailsDto : BaseDataWithShotsDto
+public class ShootingDayDetailsDto : BaseDtoWithShotsDto
 {
     public string Number { get; init; }
     public DateTime? ShootingDate { get; set; }

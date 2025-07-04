@@ -1,0 +1,21 @@
+﻿@using FilmUI.Helpers
+
+@if (!string.IsNullOrWhiteSpace(shotsShootingTime))
+{
+    <div class="alert alert-secondary d-flex align-items-center py-2 mb-4" role="alert">
+        <i class="bi bi-clock-history me-2"></i>
+        <span class="fw-semibold">@shotsShootingTime</span>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public IEnumerable<BaseDtoWithShotsDto> Items { get; set; }
+
+    private string shotsShootingTime;
+
+    protected override void OnParametersSet()
+    {
+        shotsShootingTime = Items?.ShotsShootingTime();
+    }
+}
