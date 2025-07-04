@@ -7,6 +7,9 @@ public enum PageKey
     Cast,
     CastShots,
 
+    Gear,
+    GearShots,
+
     Scenes,
     Shots,
     ScenesShots,

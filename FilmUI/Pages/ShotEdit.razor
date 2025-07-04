@@ -24,11 +24,18 @@
         </select>
     </div>
 
-    <div class="mb-3" style="width: 150px;">
+    <div class="mb-3 d-flex gap-2">
         <button class="btn btn-outline-primary"
+                style="width: 150px;"
                 @onclick="OpenCastModal"
                 disabled="@(IsEditMode ? null : true)">
             <i class="bi bi-people"></i> Assign Cast
+        </button>
+        <button class="btn btn-outline-primary"
+                style="width: 150px;"
+                @onclick="OpenGearModal"
+                disabled="@(IsEditMode ? null : true)">
+            <i class="bi bi-tools"></i> Assign Gear
         </button>
     </div>
 
@@ -96,6 +103,56 @@
                             @onclick="SaveCastSelectionAsync"
                             disabled="@IsSavingCastSelections">
                         @if (IsSavingCastSelections)
+                        {
+                            <span>
+                                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                Saving...
+                            </span>
+                        }
+                        else
+                        {
+                            <span>Save</span>
+                        }
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (IsGearModalOpen)
+{
+    <div class="modal show d-block" tabindex="-1" role="dialog" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Select Gear Members</h5>
+                    <button type="button" class="btn-close" @onclick="CloseGearModal"></button>
+                </div>
+                <div class="modal-body">
+                    @if (GearSelections is null)
+                    {
+                        <p>Loading gear...</p>
+                    }
+                    else
+                    {
+                        @foreach (var gear in GearSelections)
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" @bind="gear.IsSelected" />
+                                <label class="form-check-label">
+                                    <span class="fw-bold">@gear.ShortDescription</span>
+                                </label>
+                            </div>
+                        }
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" @onclick="CloseGearModal">Close</button>
+                    <button class="btn btn-primary"
+                            @onclick="SaveGearSelectionAsync"
+                            disabled="@IsSavingGearSelections">
+                        @if (IsSavingGearSelections)
                         {
                             <span>
                                 <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>

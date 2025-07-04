@@ -1,0 +1,57 @@
+﻿@page "/gear-shots"
+@inherits ListPageBase<GearDetailsDto>
+
+<h3 class="mb-4">@ListTitle</h3>
+
+<LoadingOrEmptyOrList Items="Items">
+    <div class="accordion" id="locationsAccordion">
+        @foreach (var gear in Items)
+        {
+            var collapseId = $"collapse-{gear.Id}";
+            var headingId = $"heading-{gear.Id}";
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="@headingId">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@collapseId" aria-expanded="false" aria-controls="@collapseId">
+                        <div class="d-flex flex-column">
+                            <div>
+                                <span class="fw-bold">@gear.ShortDescription</span> – @gear.Notes
+                                @if (gear.HasShots)
+                                {
+                                    <br />
+                                    <small class="text-muted">@gear.ShotsShootingTime</small>
+                                }
+                            </div>
+                        </div>
+                    </button>
+                </h2>
+                <div id="@collapseId" class="accordion-collapse collapse" aria-labelledby="@headingId" data-bs-parent="#locationsAccordion">
+                    <div class="accordion-body">
+                        @if (gear.Shots != null && gear.Shots.Count > 0)
+                        {
+                            <ul class="list-group">
+                                @foreach (var shot in gear.Shots)
+                                {
+                                    <li class="list-group-item">
+                                        <strong>@shot.ShortDescription</strong>
+                                        <br />
+                                        @shot.Location | @shot.ShootingDay
+                                        <br />
+                                        <small>Shooting Time: @shot.ShootingTime</small>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <div class="text-muted">No shots for this gear.</div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</LoadingOrEmptyOrList>
+
+@code {
+    protected override PageKey Page => PageKey.GearShots;
+}

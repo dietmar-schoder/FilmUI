@@ -1,0 +1,29 @@
+﻿@page "/gear"
+@inherits ListPageBase<GearDto>
+
+<HeaderPlus Title=@ListTitle
+            ActionUrl=@($"{EditRoute}/0")
+            ActionTooltip="Add new gear" />
+
+<LoadingOrEmptyOrList Items="Items">
+    <ul class="list-group">
+        @foreach (var gear in Items)
+        {
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="fw-bold">@gear.ShortDescription</div>
+@*                         <small class="text-muted">@gear.Notes</small>
+ *@                    </div>
+                    <a class="btn btn-sm btn-outline-primary" href="@EditRoute/@gear.Id" title="Edit">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                </div>
+            </li>
+        }
+    </ul>
+</LoadingOrEmptyOrList>
+
+@code {
+    protected override PageKey Page => PageKey.Gear;
+}

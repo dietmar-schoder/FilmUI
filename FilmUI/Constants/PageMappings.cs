@@ -7,6 +7,8 @@ public static class PageMappings
         [PageKey.Films] = "/api/films",
         [PageKey.Cast] = "/api/films/[FILMID]/casts",
         [PageKey.CastShots] = "/api/films/[FILMID]/casts-with-shots",
+        [PageKey.Gear] = "/api/films/[FILMID]/gears",
+        [PageKey.GearShots] = "/api/films/[FILMID]/gears-with-shots",
         [PageKey.Scenes] = "/api/films/[FILMID]/scenes",
         [PageKey.Shots] = "/api/films/[FILMID]/shots",
         [PageKey.ScenesShots] = "/api/films/[FILMID]/scenes-with-shots",
@@ -21,6 +23,7 @@ public static class PageMappings
     {
         [PageKey.Films] = "/films",
         [PageKey.Cast] = "/cast",
+        [PageKey.Gear] = "/gear",
         [PageKey.Scenes] = "/scenes",
         [PageKey.Shots] = "/shots",
         [PageKey.Locations] = "/locations",
@@ -32,6 +35,7 @@ public static class PageMappings
     {
         [PageKey.Films] = "/film/edit",
         [PageKey.Cast] = "/cast/edit",
+        [PageKey.Gear] = "/gear/edit",
         [PageKey.Scenes] = "/scene/edit",
         [PageKey.Shots] = "/shot/edit",
         [PageKey.Locations] = "/location/edit",
@@ -44,6 +48,8 @@ public static class PageMappings
         [PageKey.Films] = "Films",
         [PageKey.Cast] = "Cast",
         [PageKey.CastShots] = "Cast + Shots",
+        [PageKey.Gear] = "Gear",
+        [PageKey.GearShots] = "Gear + Shots",
         [PageKey.Scenes] = "Scenes",
         [PageKey.Shots] = "Shots",
         [PageKey.ScenesShots] = "Scenes + Shots",
