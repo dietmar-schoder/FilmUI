@@ -4,18 +4,36 @@ namespace FilmUI.Helpers;
 
 public static class Extensions
 {
-    public static string ShotsShootingTime(this IEnumerable<BaseDtoWithShotsDto> dto)
+    public static string ShotsDuration(this IEnumerable<BaseDtoWithShotsDto> dto)
+    {
+        if (dto is null || !dto.Any()) return string.Empty;
+
+        return ShotDuration(dto);
+
+        static string ShotDuration(IEnumerable<BaseDtoWithShotsDto> dto) =>
+            dto.Sum(dto => dto.DurationSeconds).ToHoursMinutesSeconds();
+    }
+
+    public static string ShootingsDuration(this IEnumerable<BaseDtoWithShotsDto> dto)
     {
         if (dto is null || !dto.Any()) return string.Empty;
 
         var numberOfShots = dto.Sum(dto => dto.NumberOfShots);
-        return $"{numberOfShots} Shot{(numberOfShots > 1 ? "s" : string.Empty)}: {ShootingTime(dto)}";
+        return $"{numberOfShots} Shot{(numberOfShots > 1 ? "s" : string.Empty)}: {ShootingDuration(dto)}";
 
-        static string ShootingTime(IEnumerable<BaseDtoWithShotsDto> dto) =>
-            dto.Sum(dto => dto.ShootingTimeMinutes).ToDayHourMinuteDuration();
+        static string ShootingDuration(IEnumerable<BaseDtoWithShotsDto> dto) =>
+            dto.Sum(dto => dto.ShootingTimeMinutes).ToWeeksDaysHoursMinutes();
     }
 
-    public static string ToDayHourMinuteDuration(this int totalMinutes)
+    public static string ToHoursMinutesSeconds(this int totalSeconds)
+    {
+        int hours = totalSeconds / 3600;
+        int minutes = (totalSeconds % 3600) / 60;
+        int seconds = totalSeconds % 60;
+        return $"{hours}:{minutes:D2}:{seconds:D2}";
+    }
+
+    public static string ToWeeksDaysHoursMinutes(this int totalMinutes)
     {
         if (totalMinutes <= 0) return null;
 

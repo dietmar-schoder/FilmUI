@@ -7,6 +7,7 @@ public class ShotDto(
     string location,
     string shootingDay,
     string shootingTime,
+    int durationSeconds,
     int shootingTimeMinutes)
 {
     public int Id { get; set; } = id;
@@ -15,6 +16,7 @@ public class ShotDto(
     public string Location { get; set; } = location;
     public string ShootingDay { get; set; } = shootingDay;
     public string ShootingTime { get; set; } = shootingTime;
+    public int DurationSeconds { get; set; } = durationSeconds;
     public int ShootingTimeMinutes { get; set; } = shootingTimeMinutes;
     public int? SceneId { get; set; }
     public int? LocationId { get; set; }
@@ -23,7 +25,7 @@ public class ShotDto(
     public List<SceneDto> AllScenes { get; set; } = [];
     public List<ShootingDayDto> AllShootingDays { get; set; } = [];
 
-    public ShotDto() : this(0, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, 0) { }
+    public ShotDto() : this(0, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, 0, 0) { }
 }
 
 public record ShotDetailsDto(
@@ -32,6 +34,7 @@ public record ShotDetailsDto(
     string Location,
     string ShootingDay,
     string ShootingTime,
+    int DurationSeconds,
     int ShootingTimeMinutes,
     List<CastDto> Casts)
 {

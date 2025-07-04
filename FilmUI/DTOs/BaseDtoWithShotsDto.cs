@@ -6,6 +6,7 @@ public abstract class BaseDtoWithShotsDto
     public string ShortDescription { get; init; }
     public string ShootingTime { get; init; }
     public List<ShotDetailsDto> Shots { get; init; }
+    public int DurationSeconds => Shots?.Sum(shot => shot.DurationSeconds) ?? 0;
     public int ShootingTimeMinutes => Shots?.Sum(shot => shot.ShootingTimeMinutes) ?? 0;
     public bool HasShots => Shots is not null && Shots.Count > 0;
     public int NumberOfShots => Shots?.Count ?? 0;
