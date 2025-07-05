@@ -15,9 +15,12 @@
                         <div class="fw-bold">@gear.ShortDescription</div>
 @*                         <small class="text-muted">@gear.Notes</small>
  *@                    </div>
-                    <a class="btn btn-sm btn-outline-primary" href="@EditRoute/@gear.Id" title="Edit">
-                        <i class="bi bi-pencil"></i>
-                    </a>
+                    <div class="d-flex align-items-center">
+                        <ProgressIcon Progress="@gear.Progress" />
+                        <a class="btn btn-sm btn-outline-primary" href="@EditRoute/@gear.Id" title="Edit">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                    </div>
                 </div>
             </li>
         }

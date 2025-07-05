@@ -14,9 +14,12 @@
                     <div>
                         <div class="fw-bold">@film.Title</div>
                     </div>
-                    <a class="btn btn-sm btn-outline-primary" href="@EditRoute/@film.Id" title="Edit">
-                        <i class="bi bi-pencil"></i>
-                    </a>
+                    <div class="d-flex align-items-center">
+                        <ProgressIcon Progress="@film.Progress" />
+                        <a class="btn btn-sm btn-outline-primary" href="@EditRoute/@film.Id" title="Edit">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                    </div>
                 </div>
             </li>
         }

@@ -1,4 +1,4 @@
-﻿@typeparam TDto where TDto : class, new()
+﻿@typeparam T where T : class, new()
 
 <div class="d-flex align-items-center mb-3">
     <button class="btn btn-link p-0 me-2" @onclick="Logic.GoBack" title="Go back" style="font-size: 1.5rem;">
@@ -52,7 +52,7 @@ else
 }
 
 @code {
-    [Parameter] public EditPageBaseCore<TDto> Logic { get; set; }
+    [Parameter] public EditPageBaseCore<T> Logic { get; set; }
     [Parameter] public RenderFragment ChildContent { get; set; }
     [Parameter] public string DeleteMessage { get; set; }
 }

@@ -5,6 +5,7 @@ public abstract class BaseDtoWithShotsDto
     public int Id { get; init; }
     public string ShortDescription { get; init; }
     public string ShootingTime { get; init; }
+    public string Notes { get; set; }
     public List<ShotDetailsDto> Shots { get; init; }
     public int DurationSeconds => Shots?.Sum(shot => shot.DurationSeconds) ?? 0;
     public int ShootingTimeMinutes => Shots?.Sum(shot => shot.ShootingTimeMinutes) ?? 0;

@@ -1,7 +1,7 @@
 ﻿@page "/scene/edit/{Id:int}"
 @inherits EditPageBaseInt<SceneDto>
 
-<Edit TDto="SceneDto" DeleteMessage="Are you sure you want to delete this scene?" Logic="this">
+<Edit T="SceneDto" DeleteMessage="Are you sure you want to delete this scene?" Logic="this">
     <div class="mb-3">
         <label class="form-label fw-bold">Number</label>
         <input class="form-control" @bind="Item.Number" />
@@ -9,5 +9,9 @@
     <div class="mb-3">
         <label class="form-label fw-bold">Short Description</label>
         <input class="form-control" @bind="Item.ShortDescription" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label fw-bold">Notes</label>
+        <textarea class="form-control" rows="5" maxlength="4000" @bind="Item.Notes"></textarea>
     </div>
 </Edit>

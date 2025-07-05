@@ -17,9 +17,12 @@
                             @shooting.ShootingDate?.ToString("ddd dd/MM/yyyy")
                         </span>
                     </div>
-                    <a class="btn btn-sm btn-outline-primary" href="@EditRoute/@shooting.Id" title="Edit">
-                        <i class="bi bi-pencil"></i>
-                    </a>
+                    <div class="d-flex align-items-center">
+                        <ProgressIcon Progress="@shooting.Progress" />
+                        <a class="btn btn-sm btn-outline-primary" href="@EditRoute/@shooting.Id" title="Edit">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                    </div>
                 </div>
             </li>
         }

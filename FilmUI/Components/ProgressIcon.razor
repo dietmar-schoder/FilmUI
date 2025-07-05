@@ -1,0 +1,22 @@
+﻿@if (!string.IsNullOrEmpty(GetProgressIcon()))
+{
+    <i class="@GetProgressIcon() me-3" title="@GetProgressTitle()"></i>
+}
+
+@code {
+    [Parameter] public int Progress { get; set; }
+
+    private string GetProgressIcon() => Progress switch
+    {
+        1 => "bi bi-circle",
+        2 => "bi bi-check-circle",
+        _ => string.Empty
+    };
+
+    private string GetProgressTitle() => Progress switch
+    {
+        1 => "In Progress",
+        2 => "Done",
+        _ => string.Empty
+    };
+}
