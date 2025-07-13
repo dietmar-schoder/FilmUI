@@ -31,7 +31,7 @@ public class ApiService(
     private readonly ISessionService _sessionService = sessionService;
     private readonly ISlackService _slackService = slackService;
     private readonly string BackendUrl = config.BackendUrl;
-    private readonly string FilmId = config.FilmId;
+    private readonly string FilmId = sessionService.SelectedFilmId?.ToString();
 
     private const int httpErrorStatusCodeRangeStart = 400;
     private const int httpErrorStatusCodeUnautorized = 401;

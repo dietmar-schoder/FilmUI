@@ -5,6 +5,7 @@ namespace FilmUI.Helpers;
 public interface ISessionService
 {
     string Jwt { get; }
+    Guid? SelectedFilmId { get; }
     void SetUser(UserDto user);
     void SetSelectedFilmId(Guid filmId);
     void Clear();
