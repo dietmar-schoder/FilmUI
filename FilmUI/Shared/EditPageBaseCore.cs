@@ -34,7 +34,7 @@ public abstract class EditPageBaseCore<TDto> : ComponentBase where TDto : class,
         }
         else
         {
-            Item = await Api.GetAsync<TDto>($"{ApiEndpoint}/{IdAsString}");
+            Item = await Api.GetAsyncOLD<TDto>($"{ApiEndpoint}/{IdAsString}");
         }
     }
 
@@ -52,8 +52,8 @@ public abstract class EditPageBaseCore<TDto> : ComponentBase where TDto : class,
         IsSaving = true;
 
         await (IsAddMode
-            ? Api.PostAsync(ApiEndpoint, Item)
-            : Api.PutAsync($"{ApiEndpoint}/{IdAsString}", Item));
+            ? Api.PostAsyncOLD(ApiEndpoint, Item)
+            : Api.PutAsyncOLD($"{ApiEndpoint}/{IdAsString}", Item));
 
         Nav.NavigateTo(ListRoute);
 
@@ -64,7 +64,7 @@ public abstract class EditPageBaseCore<TDto> : ComponentBase where TDto : class,
     {
         IsSaving = true;
         await JS.InvokeVoidAsync("hideModalById", "deleteModal");
-        await Api.DeleteAsync($"{ApiEndpoint}/{IdAsString}");
+        await Api.DeleteAsyncOLD($"{ApiEndpoint}/{IdAsString}");
         Nav.NavigateTo(ListRoute);
         IsSaving = false;
     }

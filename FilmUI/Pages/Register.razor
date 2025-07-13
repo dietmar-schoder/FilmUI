@@ -1,6 +1,12 @@
 ﻿@page "/register"
+@inherits ApiPageBase
 
 <h3>Register</h3>
+
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <div class="alert alert-danger">@ErrorMessage</div>
+}
 
 <EditForm Model="@registerDto" OnValidSubmit="RegisterUser">
     <DataAnnotationsValidator />

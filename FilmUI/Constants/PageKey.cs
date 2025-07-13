@@ -2,6 +2,10 @@
 
 public enum PageKey
 {
+    Register,
+    Login,
+    ConfirmEmail,
+
     Films,
 
     Cast,

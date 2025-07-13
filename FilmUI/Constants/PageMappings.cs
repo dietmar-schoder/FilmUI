@@ -4,7 +4,12 @@ public static class PageMappings
 {
     public static readonly Dictionary<PageKey, string> ApiEndpoints = new()
     {
+        [PageKey.Register] = "/api/users/register",
+        [PageKey.ConfirmEmail] = "/api/users/confirm",
+        [PageKey.Login] = "/api/users/login",
+
         [PageKey.Films] = "/api/films",
+
         [PageKey.Cast] = "/api/films/[FILMID]/casts",
         [PageKey.CastShots] = "/api/films/[FILMID]/casts-with-shots",
         [PageKey.Gear] = "/api/films/[FILMID]/gears",
@@ -16,6 +21,7 @@ public static class PageMappings
         [PageKey.LocationsShots] = "/api/films/[FILMID]/locations-with-shots",
         [PageKey.ShootingDays] = "/api/films/[FILMID]/shootingdays",
         [PageKey.ShootingDaysShots] = "/api/films/[FILMID]/shootingdays-with-shots",
+
         [PageKey.Calendar] = "/api/films/[FILMID]/shootingdays",
     };
 

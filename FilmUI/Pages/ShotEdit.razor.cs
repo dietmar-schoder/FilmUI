@@ -16,12 +16,12 @@ public partial class ShotEdit : EditPageBaseInt<ShotDto>
     public override PageKey Page => PageKey.Shots;
 
     protected override async Task InitNewItemAsync() =>
-        Item = await Api.GetAsync<ShotDto>($"{ApiEndpoint}/0");
+        Item = await Api.GetAsyncOLD<ShotDto>($"{ApiEndpoint}/0");
 
     private async Task OpenCastModal()
     {
         IsCastModalOpen = true;
-        CastSelections = await Api.GetAsync<List<CastSelectionDto>>($"{ApiEndpoint}/{IdAsString}/cast-selections");
+        CastSelections = await Api.GetAsyncOLD<List<CastSelectionDto>>($"{ApiEndpoint}/{IdAsString}/cast-selections");
     }
 
     private void CloseCastModal() => IsCastModalOpen = false;
@@ -37,7 +37,7 @@ public partial class ShotEdit : EditPageBaseInt<ShotDto>
             .Select(c => c.CastId)
             .ToList();
 
-        await Api.PostAsync($"{ApiEndpoint}/{IdAsString}/cast-selections", selectedIds);
+        await Api.PostAsyncOLD($"{ApiEndpoint}/{IdAsString}/cast-selections", selectedIds);
 
         IsSavingCastSelections = false;
 
@@ -47,7 +47,7 @@ public partial class ShotEdit : EditPageBaseInt<ShotDto>
     private async Task OpenGearModal()
     {
         IsGearModalOpen = true;
-        GearSelections = await Api.GetAsync<List<GearSelectionDto>>($"{ApiEndpoint}/{IdAsString}/gear-selections");
+        GearSelections = await Api.GetAsyncOLD<List<GearSelectionDto>>($"{ApiEndpoint}/{IdAsString}/gear-selections");
     }
 
     private void CloseGearModal() => IsGearModalOpen = false;
@@ -63,7 +63,7 @@ public partial class ShotEdit : EditPageBaseInt<ShotDto>
             .Select(c => c.GearId)
             .ToList();
 
-        await Api.PostAsync($"{ApiEndpoint}/{IdAsString}/gear-selections", selectedIds);
+        await Api.PostAsyncOLD($"{ApiEndpoint}/{IdAsString}/gear-selections", selectedIds);
 
         IsSavingGearSelections = false;
 

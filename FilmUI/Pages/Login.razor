@@ -1,0 +1,19 @@
+﻿@page "/login"
+@inherits ApiPageBase
+
+<h3>Login</h3>
+
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <div class="alert alert-danger">@ErrorMessage</div>
+}
+
+<EditForm Model="@loginDto" OnValidSubmit="LoginUser">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText @bind-Value="loginDto.Email" placeholder="Email" class="form-control mb-2" />
+    <InputText @bind-Value="loginDto.Password" placeholder="Password" type="password" class="form-control mb-2" />
+
+    <button type="submit" class="btn btn-primary">Login</button>
+</EditForm>

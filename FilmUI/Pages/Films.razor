@@ -1,6 +1,11 @@
 ﻿@page "/films"
 @inherits ListPageBase<FilmDto>
 
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <div class="alert alert-danger">@ErrorMessage</div>
+}
+
 <HeaderPlus Title=@ListTitle
             ActionUrl=@($"{EditRoute}/00000000-0000-0000-0000-000000000000")
             ActionTooltip="Add new film" />
