@@ -2,8 +2,8 @@
 @inherits ListPageBase<LocationDto>
 
 <HeaderPlus Title=@ListTitle
-            ActionUrl=@($"{EditRoute}/0")
-            ActionTooltip="Add new location" />
+            AddUrl=@($"{EditRoute}/0")
+            AddTooltip="Add new location" />
 
 <LoadingOrEmptyOrList Items="Items">
     <ul class="list-group">

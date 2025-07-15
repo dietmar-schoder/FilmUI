@@ -2,8 +2,8 @@
 @inherits ListPageBase<ShotDto>
 
 <HeaderPlus Title=@ListTitle
-            ActionUrl=@($"{EditRoute}/0")
-            ActionTooltip="Add new shot" />
+            AddUrl=@($"{EditRoute}/0")
+            AddTooltip="Add new shot" />
 
 <LoadingOrEmptyOrList Items="Items">
     <ul class="list-group">

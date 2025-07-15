@@ -7,24 +7,30 @@
 }
 
 <HeaderPlus Title=@ListTitle
-            ActionUrl=@($"{EditRoute}/00000000-0000-0000-0000-000000000000")
-            ActionTooltip="Add new film" />
+            AddUrl=@($"{EditRoute}/00000000-0000-0000-0000-000000000000")
+            AddTooltip="Add new film" />
 
 <LoadingOrEmptyOrList Items="Items">
     <ul class="list-group">
         @foreach (var film in Items)
         {
-            <li class="list-group-item">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <div class="fw-bold">@film.Title</div>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <ProgressIcon Progress="@film.Progress" />
-                        <a class="btn btn-sm btn-outline-primary" href="@EditRoute/@film.Id" title="Edit">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                    </div>
+            var isSelected = Session.SelectedFilmId == film.Id;
+
+            <li class="list-group-item d-flex justify-content-between align-items-center @(isSelected ? "active" : "")"
+                style="cursor: pointer"
+                @onclick="@(() => OnSelectFilm(film))">
+
+                <div>
+                    <div class="fw-bold">@film.Title</div>
+                </div>
+
+                <div class="d-flex align-items-center gap-2">
+                    <ProgressIcon Progress="@film.Progress" />
+                    <a class="btn btn-sm @(isSelected ? "btn-outline-light" : "btn-outline-primary")"
+                        href="@EditRoute/@film.Id"
+                        title="Edit">
+                        <i class="bi bi-pencil"></i>
+                    </a>
                 </div>
             </li>
         }

@@ -2,8 +2,8 @@
 @inherits ListPageBase<SceneDto>
 
 <HeaderPlus Title=@ListTitle
-            ActionUrl=@($"{EditRoute}/0")
-            ActionTooltip="Add new scene" />
+            AddUrl=@($"{EditRoute}/0")
+            AddTooltip="Add new scene" />
 
 <LoadingOrEmptyOrList Items="Items">
     <ul class="list-group">

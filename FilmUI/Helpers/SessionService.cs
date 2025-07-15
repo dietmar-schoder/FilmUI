@@ -14,9 +14,9 @@ public interface ISessionService
     Guid? SelectedFilmId => SelectedFilm?.Id;
     bool HasFilmSelected => SelectedFilm is not null;
 
-    void SetUser(UserDto user);
-    void SetSelectedFilm(FilmDto film);
-    void Clear();
+    Task SetUser(UserDto user);
+    Task SetSelectedFilm(FilmDto film);
+    Task Clear();
 }
 
 public class SessionService(ILocalStorageService localStorage) : ISessionService
@@ -33,19 +33,19 @@ public class SessionService(ILocalStorageService localStorage) : ISessionService
         SelectedFilm = await _localStorage.GetItemAsync<FilmDto>("film");
     }
 
-    public async void SetUser(UserDto user)
+    public async Task SetUser(UserDto user)
     {
         CurrentUser = user;
         await _localStorage.SetItemAsync("user", user);
     }
 
-    public async void SetSelectedFilm(FilmDto film)
+    public async Task SetSelectedFilm(FilmDto film)
     {
         SelectedFilm = film;
         await _localStorage.SetItemAsync("film", film);
     }
 
-    public async void Clear()
+    public async Task Clear()
     {
         CurrentUser = null;
         SelectedFilm = null;

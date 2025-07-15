@@ -1,6 +1,6 @@
 ﻿<h3 class="mb-4 d-flex justify-content-between align-items-center">
     @Title
-    <a href="@ActionUrl" class="btn btn-primary btn-sm" title="@ActionTooltip">
+    <a href="@AddUrl" class="btn btn-primary btn-sm" title="@AddTooltip">
         <i class="bi bi-plus-lg"></i> Add
     </a>
 </h3>
@@ -10,8 +10,8 @@
     public string Title { get; set; } = default!;
 
     [Parameter, EditorRequired]
-    public string ActionUrl { get; set; } = default!;
+    public string AddUrl { get; set; } = default!;
 
     [Parameter]
-    public string ActionTooltip { get; set; } = "Add new item";
+    public string AddTooltip { get; set; } = "Add new item";
 }

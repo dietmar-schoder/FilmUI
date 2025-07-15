@@ -2,8 +2,8 @@
 @inherits ListPageBase<CastDto>
 
 <HeaderPlus Title=@ListTitle
-            ActionUrl=@($"{EditRoute}/0")
-            ActionTooltip="Add new cast member" />
+            AddUrl=@($"{EditRoute}/0")
+            AddTooltip="Add new cast member" />
 
 <LoadingOrEmptyOrList Items="Items">
     <ul class="list-group">
