@@ -1,38 +1,55 @@
-﻿using FilmUI.DTOs;
+﻿using Blazored.LocalStorage;
+using FilmUI.DTOs;
 
 namespace FilmUI.Helpers;
 
 public interface ISessionService
 {
-    string Jwt { get; }
-    Guid? SelectedFilmId { get; }
+    UserDto CurrentUser { get; }
+    bool IsLoggedIn => CurrentUser is not null;
+    Guid? UserId => CurrentUser?.Id;
+    string Jwt => CurrentUser?.Jwt;
+
+    FilmDto SelectedFilm { get; }
+    Guid? SelectedFilmId => SelectedFilm?.Id;
+    bool HasFilmSelected => SelectedFilm is not null;
+
     void SetUser(UserDto user);
-    void SetSelectedFilmId(Guid filmId);
+    void SetSelectedFilm(FilmDto film);
     void Clear();
 }
 
-public class SessionService : ISessionService
+public class SessionService(ILocalStorageService localStorage) : ISessionService
 {
+    private readonly ILocalStorageService _localStorage = localStorage;
+
     public UserDto CurrentUser { get; private set; }
-    public string Jwt => CurrentUser?.Jwt;
-    public Guid? UserId => CurrentUser?.Id;
 
-    public Guid? SelectedFilmId { get; private set; }
+    public FilmDto SelectedFilm { get; private set; }
 
-    public bool IsLoggedIn => CurrentUser is not null;
-
-    public void SetUser(UserDto user)
+    public async Task InitializeAsync()
     {
-        CurrentUser = user;
-        // Optionally persist to local storage if you want auto-login
+        CurrentUser = await _localStorage.GetItemAsync<UserDto>("user");
+        SelectedFilm = await _localStorage.GetItemAsync<FilmDto>("film");
     }
 
-    public void SetSelectedFilmId(Guid filmId) =>
-        SelectedFilmId = filmId;
+    public async void SetUser(UserDto user)
+    {
+        CurrentUser = user;
+        await _localStorage.SetItemAsync("user", user);
+    }
 
-    public void Clear()
+    public async void SetSelectedFilm(FilmDto film)
+    {
+        SelectedFilm = film;
+        await _localStorage.SetItemAsync("film", film);
+    }
+
+    public async void Clear()
     {
         CurrentUser = null;
-        SelectedFilmId = null;
+        SelectedFilm = null;
+        await _localStorage.RemoveItemAsync("user");
+        await _localStorage.RemoveItemAsync("film");
     }
 }

@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using FilmUI;
 using FilmUI.Helpers;
 using Microsoft.AspNetCore.Components.Web;
@@ -23,5 +24,9 @@ var config = await builder.Services
     .GetFromJsonAsync<AppConfig>(configFile);
 
 builder.Services.AddSingleton(config);
+builder.Services.AddBlazoredLocalStorage();
 
-await builder.Build().RunAsync();
+var host = builder.Build();
+var session = host.Services.GetRequiredService<ISessionService>() as SessionService;
+await session.InitializeAsync();
+await host.RunAsync();

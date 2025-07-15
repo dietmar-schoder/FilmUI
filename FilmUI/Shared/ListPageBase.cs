@@ -9,6 +9,12 @@ public abstract class ListPageBase<T> : ApiPageBase
     protected string EditRoute => PageMappings.EditRoutes[Page];
     protected string ListTitle => PageMappings.ListTitles[Page];
 
-    protected override async Task OnInitializedAsync() =>
-        Items = await CallApi(() => Api.GetAsync<List<T>>(ApiEndpoint)) ?? [];
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        if (Session.IsLoggedIn)
+        {
+            Items = await CallApi(() => Api.GetAsync<List<T>>(ApiEndpoint)) ?? [];
+        }
+    }
 }

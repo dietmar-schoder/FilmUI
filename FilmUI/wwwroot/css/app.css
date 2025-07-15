@@ -75,3 +75,11 @@
 code {
     color: #c02d76;
 }
+
+
+.nav-link.disabled {
+    pointer-events: none;
+    color: #aaa !important;
+    text-decoration: none;
+    cursor: not-allowed;
+}

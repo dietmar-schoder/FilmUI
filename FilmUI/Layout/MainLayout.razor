@@ -1,4 +1,7 @@
-﻿@inherits LayoutComponentBase
+﻿@using FilmUI.Helpers
+@inherits LayoutComponentBase
+@inject ISessionService Session
+@inject NavigationManager Navigation
 
 <div class="d-flex" style="height: 100vh;">
     <div class="bg-light border-end p-3" style="width: 220px;">
@@ -7,25 +10,60 @@
             Menu
         </h5>
         <nav class="nav flex-column">
-            <NavLink href="/films" class="nav-link" activeClass="fw-bold text-primary">Films</NavLink>
+            @if (Session.IsLoggedIn)
+            {
+                <NavLink href="/films" class="nav-link" activeClass="fw-bold text-primary">Films</NavLink>
+            }
+            else
+            {
+                <a href="#" class="nav-link disabled" @onclick:preventDefault title="Login or register first">Films</a>
+            }
             <hr class="my-2" />
-            <NavLink href="/cast" class="nav-link" activeClass="fw-bold text-primary">Cast</NavLink>
-            <NavLink href="/scenes" class="nav-link" activeClass="fw-bold text-primary">Scenes</NavLink>
-            <NavLink href="/shots" class="nav-link" activeClass="fw-bold text-primary">Shots</NavLink>
-            <NavLink href="/locations" class="nav-link" activeClass="fw-bold text-primary">Locations</NavLink>
-            <NavLink href="/gear" class="nav-link" activeClass="fw-bold text-primary">Gear</NavLink>
-            <NavLink href="/shootingdays" class="nav-link" activeClass="fw-bold text-primary">Shootings</NavLink>
-            <hr class="my-2" />
-            <NavLink href="/cast-shots" class="nav-link" activeClass="fw-bold text-primary">Cast + Shots</NavLink>
-            <NavLink href="/scenes-shots" class="nav-link" activeClass="fw-bold text-primary">Scenes + Shots</NavLink>
-            <NavLink href="/locations-shots" class="nav-link" activeClass="fw-bold text-primary">Locations + Shots</NavLink>
-            <NavLink href="/gear-shots" class="nav-link" activeClass="fw-bold text-primary">Gear + Shots</NavLink>
-            <NavLink href="/shootingdays-shots" class="nav-link" activeClass="fw-bold text-primary">Shootings + Shots</NavLink>
-            <hr class="my-2" />
-            <NavLink href="/calendar" class="nav-link" activeClass="fw-bold text-primary">Calendar</NavLink>
-            <hr class="my-2" />
-            <NavLink href="/login" class="nav-link" activeClass="fw-bold text-primary">Login</NavLink>
-            <NavLink href="/register" class="nav-link" activeClass="fw-bold text-primary">Register</NavLink>
+            @if (Session.HasFilmSelected)
+            {
+                <NavLink href="/cast" class="nav-link" activeClass="fw-bold text-primary">Cast</NavLink>
+                <NavLink href="/scenes" class="nav-link" activeClass="fw-bold text-primary">Scenes</NavLink>
+                <NavLink href="/shots" class="nav-link" activeClass="fw-bold text-primary">Shots</NavLink>
+                <NavLink href="/locations" class="nav-link" activeClass="fw-bold text-primary">Locations</NavLink>
+                <NavLink href="/gear" class="nav-link" activeClass="fw-bold text-primary">Gear</NavLink>
+                <NavLink href="/shootingdays" class="nav-link" activeClass="fw-bold text-primary">Shootings</NavLink>
+                <hr class="my-2" />
+                <NavLink href="/cast-shots" class="nav-link" activeClass="fw-bold text-primary">Cast + Shots</NavLink>
+                <NavLink href="/scenes-shots" class="nav-link" activeClass="fw-bold text-primary">Scenes + Shots</NavLink>
+                <NavLink href="/locations-shots" class="nav-link" activeClass="fw-bold text-primary">Locations + Shots</NavLink>
+                <NavLink href="/gear-shots" class="nav-link" activeClass="fw-bold text-primary">Gear + Shots</NavLink>
+                <NavLink href="/shootingdays-shots" class="nav-link" activeClass="fw-bold text-primary">Shootings + Shots</NavLink>
+                <hr class="my-2" />
+                <NavLink href="/calendar" class="nav-link" activeClass="fw-bold text-primary">Calendar</NavLink>
+            }
+            else
+            {
+                <a href="#" class="nav-link disabled" @onclick:preventDefault title="Select a film first">Cast</a>
+                <a href="#" class="nav-link disabled" @onclick:preventDefault title="Select a film first">Scenes</a>
+                <a href="#" class="nav-link disabled" @onclick:preventDefault title="Select a film first">Shots</a>
+                <a href="#" class="nav-link disabled" @onclick:preventDefault title="Select a film first">Locations</a>
+                <a href="#" class="nav-link disabled" @onclick:preventDefault title="Select a film first">Gear</a>
+                <a href="#" class="nav-link disabled" @onclick:preventDefault title="Select a film first">Shootings</a>
+                <hr class="my-2" />
+                <a href="#" class="nav-link disabled" @onclick:preventDefault title="Select a film first">Cast + Shots</a>
+                <a href="#" class="nav-link disabled" @onclick:preventDefault title="Select a film first">Scenes + Shots</a>
+                <a href="#" class="nav-link disabled" @onclick:preventDefault title="Select a film first">Locations + Shots</a>
+                <a href="#" class="nav-link disabled" @onclick:preventDefault title="Select a film first">Gear + Shots</a>
+                <a href="#" class="nav-link disabled" @onclick:preventDefault title="Select a film first">Shootings + Shots</a>
+                <hr class="my-2" />
+                <a href="#" class="nav-link disabled" @onclick:preventDefault title="Select a film first">Calendar</a>
+            }
+            @if (Session.IsLoggedIn)
+            {
+                <NavLink href="/account" class="nav-link" activeClass="fw-bold text-primary">My Account</NavLink>
+@*                 <NavLink href="/logout" class="nav-link" activeClass="fw-bold text-primary">Logout</NavLink>
+ *@                <a href="#" class="nav-link" @onclick="Logout" @onclick:preventDefault>Logout</a>
+            }
+            else
+            {
+                <NavLink href="/login" class="nav-link" activeClass="fw-bold text-primary">Login</NavLink>
+                <NavLink href="/register" class="nav-link" activeClass="fw-bold text-primary">Register</NavLink>
+            }
         </nav>
     </div>
 
@@ -33,3 +71,11 @@
         @Body
     </div>
 </div>
+
+@code {
+    private void Logout()
+    {
+        Session.Clear();
+        Navigation.NavigateTo("/login");
+    }
+}

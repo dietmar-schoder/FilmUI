@@ -10,6 +10,8 @@ public partial class Register : ApiPageBase
 
     protected override PageKey Page => PageKey.Register;
 
+    protected override void OnInitialized() { }
+
     private async Task RegisterUser()
     {
         var userDto = await CallApi(() => Api.PostAsync<LoginDto, UserDto>(ApiEndpoint, registerDto));

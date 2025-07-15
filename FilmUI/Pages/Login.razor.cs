@@ -10,6 +10,8 @@ public partial class Login : ApiPageBase
 
     protected override PageKey Page => PageKey.Login;
 
+    protected override void OnInitialized() { }
+
     private async Task LoginUser()
     {
         var userDto = await CallApi(() => Api.PostAsync<LoginDto, UserDto>(ApiEndpoint, loginDto));
@@ -22,8 +24,7 @@ public partial class Login : ApiPageBase
         }
 
         Session.SetUser(userDto);
-        // Optionally store userDto.Jwt here, e.g., in local storage or auth context
 
-        Navigation.NavigateTo("/");
+        Navigation.NavigateTo("/films");
     }
 }
