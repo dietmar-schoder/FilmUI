@@ -7,7 +7,14 @@
     <div class="bg-light border-end p-3" style="width: 220px;">
         <h5 class="d-flex align-items-center gap-2">
             <i class="bi bi-camera-reels fs-4 me-2"></i>
-            Menu
+            @if (Session.IsLoggedIn && Session.HasFilmSelected)
+            {
+                <span>@Session.SelectedFilm.Title</span>
+            }
+            else
+            {
+                <span>Menu</span>
+            }
         </h5>
         <nav class="nav flex-column">
             @if (Session.IsLoggedIn)
@@ -55,9 +62,9 @@
             }
             @if (Session.IsLoggedIn)
             {
-                <NavLink href="/account" class="nav-link" activeClass="fw-bold text-primary">My Account</NavLink>
-@*                 <NavLink href="/logout" class="nav-link" activeClass="fw-bold text-primary">Logout</NavLink>
- *@                <a href="#" class="nav-link" @onclick="Logout" @onclick:preventDefault>Logout</a>
+@*                 <NavLink href="/account" class="nav-link" activeClass="fw-bold text-primary">My Account</NavLink>*@
+                <a href="#" class="nav-link disabled" @onclick:preventDefault>My Account</a>
+                <a href="#" class="nav-link" @onclick="Logout" @onclick:preventDefault>Logout</a>
             }
             else
             {
