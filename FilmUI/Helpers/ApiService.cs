@@ -7,7 +7,6 @@ namespace FilmUI.Helpers;
 public interface IApiService
 {
     Task<TRequest> GetAsyncOLD<TRequest>(string relativeUrl);
-    Task<List<TRequest>> GetListAsyncOLD<TRequest>(string relativeUrl);
     Task PostAsyncOLD<TRequest>(string relativeUrl, TRequest body);
     Task PutAsyncOLD<TRequest>(string relativeUrl, TRequest body);
     Task DeleteAsyncOLD(string relativeUrl);
@@ -31,10 +30,11 @@ public class ApiService(
     private readonly ISessionService _sessionService = sessionService;
     private readonly ISlackService _slackService = slackService;
     private readonly string BackendUrl = config.BackendUrl;
-    private readonly string FilmId = sessionService.SelectedFilmId?.ToString();
 
     private const int httpErrorStatusCodeRangeStart = 400;
     private const int httpErrorStatusCodeUnautorized = 401;
+
+    private string FilmId => _sessionService.SelectedFilmId?.ToString();
 
     public async Task PostAsyncOLD<T>(string relativeUrl, T body)
     {
@@ -48,13 +48,6 @@ public class ApiService(
         var url = $"{BackendUrl}{relativeUrl.Replace("[FILMID]", FilmId)}";
         var result = await _httpClient.GetFromJsonAsync<T>(url);
         return result;
-    }
-
-    public async Task<List<T>> GetListAsyncOLD<T>(string relativeUrl)
-    {
-        var url = $"{BackendUrl}{relativeUrl.Replace("[FILMID]", FilmId)}";
-        var result = await _httpClient.GetFromJsonAsync<List<T>>(url);
-        return result ?? [];
     }
 
     public async Task PutAsyncOLD<T>(string relativeUrl, T body)
@@ -90,7 +83,7 @@ public class ApiService(
         string relativeUrl,
         object body = null)
     {
-        var url = GetUrl();
+        var url = $"{BackendUrl}{relativeUrl.Replace("[FILMID]", FilmId)}";
 
         try
         {
@@ -107,9 +100,6 @@ public class ApiService(
         {
             return await HandledException(ex);
         }
-
-        string GetUrl() =>
-            $"{BackendUrl}{relativeUrl.Replace("[FILMID]", FilmId)}";
 
         HttpRequestMessage GetRequestMessage() =>
             new(method, url)

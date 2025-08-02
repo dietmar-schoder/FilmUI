@@ -1,5 +1,4 @@
 ﻿using FilmUI.Constants;
-using FilmUI.DTOs;
 
 namespace FilmUI.Shared;
 
@@ -17,11 +16,5 @@ public abstract class ListPageBase<T> : ApiPageBase
         {
             Items = await CallApi(() => Api.GetAsync<List<T>>(ApiEndpoint)) ?? [];
         }
-    }
-
-    protected async Task OnSelectFilm(FilmDto film)
-    {
-        await Session.SetSelectedFilm(film);
-        StateHasChanged();
     }
 }

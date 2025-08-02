@@ -17,6 +17,8 @@ public interface ISessionService
     Task SetUser(UserDto user);
     Task SetSelectedFilm(FilmDto film);
     Task Clear();
+
+    event Action OnChange;
 }
 
 public class SessionService(ILocalStorageService localStorage) : ISessionService
@@ -26,6 +28,8 @@ public class SessionService(ILocalStorageService localStorage) : ISessionService
     public UserDto CurrentUser { get; private set; }
 
     public FilmDto SelectedFilm { get; private set; }
+
+    public event Action OnChange;
 
     public async Task InitializeAsync()
     {
@@ -37,12 +41,14 @@ public class SessionService(ILocalStorageService localStorage) : ISessionService
     {
         CurrentUser = user;
         await _localStorage.SetItemAsync("user", user);
+        NotifyStateChanged();
     }
 
     public async Task SetSelectedFilm(FilmDto film)
     {
         SelectedFilm = film;
         await _localStorage.SetItemAsync("film", film);
+        NotifyStateChanged();
     }
 
     public async Task Clear()
@@ -51,5 +57,8 @@ public class SessionService(ILocalStorageService localStorage) : ISessionService
         SelectedFilm = null;
         await _localStorage.RemoveItemAsync("user");
         await _localStorage.RemoveItemAsync("film");
+        NotifyStateChanged();
     }
+
+    private void NotifyStateChanged() => OnChange?.Invoke();
 }
